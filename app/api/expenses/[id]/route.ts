@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { expenseUpdateSchema } from "@/lib/zod-schemas";
+import { logger } from "@/lib/logger";
 
 export async function GET(
   req: Request,
@@ -38,7 +39,7 @@ export async function GET(
 
     return NextResponse.json(expense);
   } catch (error) {
-    console.error("Get expense error:", error);
+    logger.error("Get expense error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -126,7 +127,7 @@ export async function PATCH(
 
     return NextResponse.json(expense);
   } catch (error) {
-    console.error("Update expense error:", error);
+    logger.error("Update expense error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -170,7 +171,7 @@ export async function DELETE(
 
     return NextResponse.json({ message: "Expense deleted successfully" });
   } catch (error) {
-    console.error("Delete expense error:", error);
+    logger.error("Delete expense error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

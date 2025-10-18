@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { expenseCreateSchema, expenseQuerySchema } from "@/lib/zod-schemas";
 import { measureApiRoute } from "@/lib/performance-monitor";
+import { logger } from "@/lib/logger";
 
 export async function GET(req: Request) {
   return measureApiRoute('expenses.get', async () => {
@@ -83,7 +84,7 @@ export async function GET(req: Request) {
       sumCents: sumResult._sum.amountCents || 0,
     });
     } catch (error) {
-      console.error("Get expenses error:", error);
+      logger.error("Get expenses error:", error);
       return NextResponse.json(
         { error: "Internal server error" },
         { status: 500 }
@@ -148,7 +149,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(expense, { status: 201 });
     } catch (error) {
-      console.error("Create expense error:", error);
+      logger.error("Create expense error:", error);
       return NextResponse.json(
         { error: "Internal server error" },
         { status: 500 }

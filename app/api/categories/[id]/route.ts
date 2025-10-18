@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { categoryUpdateSchema } from "@/lib/zod-schemas";
+import { logger } from "@/lib/logger";
 
 export async function PATCH(
   req: Request,
@@ -69,7 +70,7 @@ export async function PATCH(
 
     return NextResponse.json(category);
   } catch (error) {
-    console.error("Update category error:", error);
+    logger.error("Update category error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -125,7 +126,7 @@ export async function DELETE(
 
     return NextResponse.json({ message: "Category deleted successfully" });
   } catch (error) {
-    console.error("Delete category error:", error);
+    logger.error("Delete category error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

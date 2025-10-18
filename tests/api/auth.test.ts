@@ -71,5 +71,8 @@ describe('Auth API', () => {
     
     const isValid = await bcrypt.compare('password123', user.password);
     expect(isValid).toBe(true);
+    
+    const isInvalid = await bcrypt.compare('wrongpassword', user.password);
+    expect(isInvalid).toBe(false);
   });
 });

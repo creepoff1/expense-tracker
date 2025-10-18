@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { registerSchema } from "@/lib/zod-schemas";
-import bcrypt from "bcryptjs";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -20,14 +19,17 @@ export default function RegisterPage() {
 
     const parsed = registerSchema.safeParse({ email, password });
     if (!parsed.success) {
-      setError("Invalid email or password format");
+      const errors = parsed.error.flatten().fieldErrors;
+      setError(
+        errors.email?.[0] || 
+        errors.password?.[0] || 
+        "Invalid input"
+      );
       setIsLoading(false);
       return;
     }
 
     try {
-      const hashedPassword = await bcrypt.hash(password, 12);
-      
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
@@ -35,7 +37,7 @@ export default function RegisterPage() {
         },
         body: JSON.stringify({
           email,
-          password: hashedPassword,
+          password,
         }),
       });
 

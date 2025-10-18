@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Category } from "@/lib/queries";
+import { toast } from "sonner";
 
 interface CategoryFormProps {
   category?: Category;
@@ -67,8 +68,10 @@ export function CategoryForm({ category, onSuccess, onCancel }: CategoryFormProp
         await createMutation.mutateAsync(formData);
       }
       onSuccess();
+      toast.success(category ? "Category updated!" : "Category created!");
     } catch (error) {
       console.error("Form submission error:", error);
+      toast.error("Failed to save. Please try again.");
     }
   };
 

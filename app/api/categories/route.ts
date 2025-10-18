@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { categorySchema } from "@/lib/zod-schemas";
+import { logger } from "@/lib/logger";
 
 export async function GET(req: Request) {
   try {
@@ -31,7 +32,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(categories);
   } catch (error) {
-    console.error("Get categories error:", error);
+    logger.error("Get categories error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -90,7 +91,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(category, { status: 201 });
   } catch (error) {
-    console.error("Create category error:", error);
+    logger.error("Create category error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

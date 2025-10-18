@@ -2,11 +2,14 @@ import { withAuth } from "next-auth/middleware";
 
 export default withAuth(
   function middleware(req) {
-    // Add any additional middleware logic here
+    console.log("Middleware:", { path: req.nextUrl.pathname, token: !!req.nextauth.token });
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token,
+      authorized: ({ token }) => {
+        console.log("Authorized check:", { hasToken: !!token, tokenId: token?.id });
+        return !!token;
+      },
     },
   }
 );

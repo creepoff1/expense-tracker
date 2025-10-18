@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { formatCurrency } from "@/lib/utils";
 import { Expense } from "@/lib/queries";
+import { toast } from "sonner";
 
 interface ExpenseFormProps {
   expense?: Expense;
@@ -60,8 +61,10 @@ export function ExpenseForm({ expense, onSuccess, onCancel }: ExpenseFormProps) 
         await createMutation.mutateAsync(formData);
       }
       onSuccess();
+      toast.success(expense ? "Expense updated!" : "Expense created!");
     } catch (error) {
       console.error("Form submission error:", error);
+      toast.error("Failed to save. Please try again.");
     }
   };
 

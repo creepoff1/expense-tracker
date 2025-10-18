@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { generateCSVContent } from "@/lib/utils";
+import { logger } from "@/lib/logger";
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -62,7 +63,7 @@ export async function GET(req: Request) {
       },
     });
   } catch (error) {
-    console.error("Export CSV error:", error);
+    logger.error("Export CSV error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

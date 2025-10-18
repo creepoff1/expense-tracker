@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { parseCSVContent, parseDate } from "@/lib/utils";
 import { expenseCreateSchema } from "@/lib/zod-schemas";
+import { logger } from "@/lib/logger";
 
 export async function POST(req: Request) {
   try {
@@ -133,7 +134,7 @@ export async function POST(req: Request) {
       count: result.length,
     });
   } catch (error) {
-    console.error("Import CSV error:", error);
+    logger.error("Import CSV error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

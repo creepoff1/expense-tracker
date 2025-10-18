@@ -20,7 +20,12 @@ export default function LoginPage() {
 
     const parsed = loginSchema.safeParse({ email, password });
     if (!parsed.success) {
-      setError("Invalid email or password format");
+      const errors = parsed.error.flatten().fieldErrors;
+      setError(
+        errors.email?.[0] || 
+        errors.password?.[0] || 
+        "Invalid input"
+      );
       setIsLoading(false);
       return;
     }
