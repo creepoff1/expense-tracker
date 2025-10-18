@@ -3,9 +3,11 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { expenseCreateSchema, expenseQuerySchema } from "@/lib/zod-schemas";
+import { measureApiRoute } from "@/lib/performance-monitor";
 
 export async function GET(req: Request) {
-  try {
+  return measureApiRoute('expenses.get', async () => {
+    try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -62,7 +64,7 @@ export async function GET(req: Request) {
       }),
     ]);
 
-    // Get expenses with pagination
+    // Get expenses with pagination using optimized relation loading
     const expenses = await prisma.expense.findMany({
       where,
       include: {
@@ -80,17 +82,19 @@ export async function GET(req: Request) {
       limit,
       sumCents: sumResult._sum.amountCents || 0,
     });
-  } catch (error) {
-    console.error("Get expenses error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
+    } catch (error) {
+      console.error("Get expenses error:", error);
+      return NextResponse.json(
+        { error: "Internal server error" },
+        { status: 500 }
+      );
+    }
+  }, { method: 'GET' });
 }
 
 export async function POST(req: Request) {
-  try {
+  return measureApiRoute('expenses.post', async () => {
+    try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -143,11 +147,12 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(expense, { status: 201 });
-  } catch (error) {
-    console.error("Create expense error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
+    } catch (error) {
+      console.error("Create expense error:", error);
+      return NextResponse.json(
+        { error: "Internal server error" },
+        { status: 500 }
+      );
+    }
+  }, { method: 'POST' });
 }

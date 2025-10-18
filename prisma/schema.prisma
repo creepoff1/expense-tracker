@@ -27,6 +27,9 @@ model Category {
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   expenses  Expense[]
   createdAt DateTime  @default(now())
+
+  // Composite index for user-specific category queries
+  @@index([userId, name])
 }
 
 model Expense {
@@ -41,4 +44,10 @@ model Expense {
   category    Category? @relation(fields: [categoryId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  // Composite indexes for common query patterns
+  @@index([userId, date])
+  @@index([userId, categoryId])
+  @@index([userId, date, categoryId])
+  @@index([userId, createdAt])
 }

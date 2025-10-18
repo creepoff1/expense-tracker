@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useExpenses, useCategories, useDeleteExpense, useExportCSV, useImportCSV } from "@/lib/queries";
@@ -16,7 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Download, Upload, Search, Filter } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
-export default function ExpensesPage() {
+function ExpensesPageContent() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -172,11 +172,9 @@ export default function ExpensesPage() {
                 Export CSV
               </Button>
               <label className="cursor-pointer">
-                <Button variant="outline" asChild>
-                  <span>
-                    <Upload className="h-4 w-4 mr-2" />
-                    Import CSV
-                  </span>
+                <Button variant="outline">
+                  <Upload className="h-4 w-4 mr-2" />
+                  Import CSV
                 </Button>
                 <input
                   type="file"
@@ -341,5 +339,13 @@ export default function ExpensesPage() {
         />
       </Modal>
     </div>
+  );
+}
+
+export default function ExpensesPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ExpensesPageContent />
+    </Suspense>
   );
 }

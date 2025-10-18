@@ -9,10 +9,15 @@
     "lint": "next lint",
     "test": "vitest",
     "test:e2e": "playwright test",
+    "test:coverage": "vitest --coverage",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "db:reset": "prisma migrate reset",
+    "analyze": "ANALYZE=true next build",
+    "perf:test": "yarn test && yarn test:e2e",
+    "perf:monitor": "ENABLE_PERFORMANCE_MONITORING=true yarn dev"
   },
   "dependencies": {
     "@prisma/client": "^5.16.1",

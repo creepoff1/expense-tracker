@@ -39,12 +39,12 @@ export default function HomePage() {
             Track your expenses with ease and gain insights into your spending habits
           </p>
           <div className="flex justify-center space-x-4">
-            <Button asChild size="lg">
-              <Link href="/register">Get Started</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/login">Sign In</Link>
-            </Button>
+            <Link href="/register">
+              <Button size="lg">Get Started</Button>
+            </Link>
+            <Link href="/login">
+              <Button variant="outline" size="lg">Sign In</Button>
+            </Link>
           </div>
         </div>
 
@@ -103,9 +103,9 @@ export default function HomePage() {
           <p className="text-muted-foreground mb-8">
             Join thousands of users who are already tracking their expenses with Expense Tracker Pro
           </p>
-          <Button asChild size="lg">
-            <Link href="/register">Start Tracking Today</Link>
-          </Button>
+          <Link href="/register">
+            <Button size="lg">Start Tracking Today</Button>
+          </Link>
         </div>
       </div>
     </div>
