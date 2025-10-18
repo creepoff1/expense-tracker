@@ -5,16 +5,26 @@ import bcrypt from 'bcryptjs';
 describe('Auth API', () => {
   beforeAll(async () => {
     // Clean up any existing test data
-    await prisma.expense.deleteMany();
-    await prisma.category.deleteMany();
-    await prisma.user.deleteMany();
+    try {
+      await prisma.expense.deleteMany();
+      await prisma.category.deleteMany();
+      await prisma.user.deleteMany();
+    } catch (error) {
+      // Ignore errors if tables don't exist
+      console.log('Tables not found, skipping cleanup');
+    }
   });
 
   afterAll(async () => {
     // Clean up test data
-    await prisma.expense.deleteMany();
-    await prisma.category.deleteMany();
-    await prisma.user.deleteMany();
+    try {
+      await prisma.expense.deleteMany();
+      await prisma.category.deleteMany();
+      await prisma.user.deleteMany();
+    } catch (error) {
+      // Ignore errors if tables don't exist
+      console.log('Tables not found, skipping cleanup');
+    }
   });
 
   it('should register a new user', async () => {

@@ -11,19 +11,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '20'
         cache: 'yarn'
     
     - name: Install dependencies
-      run: yarn install --frozen-lockfile
+      run: |
+        yarn install --frozen-lockfile --network-timeout 100000
+    
+    - name: Setup environment variables
+      run: |
+        echo "DATABASE_URL=file:./test.db" >> .env
+        echo "NEXTAUTH_SECRET=test-secret-for-ci" >> .env
+        echo "NEXTAUTH_URL=http://localhost:3000" >> .env
     
     - name: Generate Prisma Client
       run: yarn db:generate
+    
+    - name: Setup test database
+      run: |
+        cp prisma/dev.db prisma/test.db || echo "Creating new test database"
+        DATABASE_URL="file:./test.db" yarn db:push
     
     - name: Run linter
       run: yarn lint
