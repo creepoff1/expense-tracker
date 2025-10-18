@@ -21,7 +21,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        yarn install --frozen-lockfile --network-timeout 100000
+        yarn install --immutable --network-timeout 100000
     
     - name: Setup environment variables
       run: |

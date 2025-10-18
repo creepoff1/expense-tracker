@@ -1,9 +1,17 @@
 {
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/page": "app/page.js",
-  "/api/expenses/route": "app/api/expenses/route.js",
-  "/dashboard/page": "app/dashboard/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/register/page": "app/(auth)/register/page.js",
+  "/api/auth/register/route": "app/api/auth/register/route.js",
+  "/api/categories/[id]/route": "app/api/categories/[id]/route.js",
   "/api/categories/route": "app/api/categories/route.js",
+  "/api/expenses/[id]/route": "app/api/expenses/[id]/route.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/expenses/route": "app/api/expenses/route.js",
+  "/api/import/csv/route": "app/api/import/csv/route.js",
   "/categories/page": "app/categories/page.js",
-  "/expenses/page": "app/expenses/page.js"
+  "/dashboard/page": "app/dashboard/page.js",
+  "/page": "app/page.js",
+  "/expenses/page": "app/expenses/page.js",
+  "/api/export/csv/route": "app/api/export/csv/route.js"
 }
