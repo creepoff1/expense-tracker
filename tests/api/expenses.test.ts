@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { prisma } from '../lib/prisma';
+import { prisma } from '../../lib/prisma';
 import bcrypt from 'bcryptjs';
 
 describe('Expenses API', () => {
@@ -14,9 +14,10 @@ describe('Expenses API', () => {
 
     // Create test user
     const hashedPassword = await bcrypt.hash('password123', 12);
+    const uniqueEmail = `expenses-test-${Date.now()}@example.com`;
     const user = await prisma.user.create({
       data: {
-        email: 'test@example.com',
+        email: uniqueEmail,
         password: hashedPassword,
       },
     });

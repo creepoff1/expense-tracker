@@ -1,4 +1,4 @@
-// File: /Users/olegbulygin/Projects/test project/app/api/expenses/route.ts
+// File: /Users/olegbulygin/Projects/expense-tracker/app/api/expenses/route.ts
 import * as entry from '../../../../../app/api/expenses/route.js'
 import type { NextRequest } from 'next/server.js'
 

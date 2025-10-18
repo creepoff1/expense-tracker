@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { prisma } from '../lib/prisma';
+import { prisma } from '../../lib/prisma';
 import bcrypt from 'bcryptjs';
 
 describe('Auth API', () => {
@@ -19,26 +19,37 @@ describe('Auth API', () => {
 
   it('should register a new user', async () => {
     const hashedPassword = await bcrypt.hash('password123', 12);
+    const uniqueEmail = `test-${Date.now()}@example.com`;
     
     const user = await prisma.user.create({
       data: {
-        email: 'test@example.com',
+        email: uniqueEmail,
         password: hashedPassword,
       },
     });
 
     expect(user).toBeDefined();
-    expect(user.email).toBe('test@example.com');
+    expect(user.email).toBe(uniqueEmail);
     expect(user.id).toBeDefined();
   });
 
   it('should not allow duplicate emails', async () => {
     const hashedPassword = await bcrypt.hash('password123', 12);
+    const duplicateEmail = `duplicate-${Date.now()}@example.com`;
     
+    // Create first user
+    await prisma.user.create({
+      data: {
+        email: duplicateEmail,
+        password: hashedPassword,
+      },
+    });
+    
+    // Try to create second user with same email
     await expect(
       prisma.user.create({
         data: {
-          email: 'test@example.com',
+          email: duplicateEmail,
           password: hashedPassword,
         },
       })
@@ -46,13 +57,19 @@ describe('Auth API', () => {
   });
 
   it('should verify password hash', async () => {
-    const user = await prisma.user.findUnique({
-      where: { email: 'test@example.com' }
+    const hashedPassword = await bcrypt.hash('password123', 12);
+    const verifyEmail = `verify-${Date.now()}@example.com`;
+    
+    const user = await prisma.user.create({
+      data: {
+        email: verifyEmail,
+        password: hashedPassword,
+      },
     });
 
     expect(user).toBeDefined();
     
-    const isValid = await bcrypt.compare('password123', user!.password);
+    const isValid = await bcrypt.compare('password123', user.password);
     expect(isValid).toBe(true);
   });
 });

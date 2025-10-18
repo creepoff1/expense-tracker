@@ -1,4 +1,4 @@
-// File: /Users/olegbulygin/Projects/test project/app/dashboard/page.tsx
+// File: /Users/olegbulygin/Projects/expense-tracker/app/dashboard/page.tsx
 import * as entry from '../../../../app/dashboard/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

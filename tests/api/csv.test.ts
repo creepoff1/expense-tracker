@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { generateCSVContent, parseCSVContent } from '../lib/utils';
+import { generateCSVContent, parseCSVContent } from '../../lib/utils';
 
 describe('CSV Operations', () => {
   const mockExpenses = [
@@ -24,7 +24,7 @@ describe('CSV Operations', () => {
   it('should generate CSV content', () => {
     const csv = generateCSVContent(mockExpenses);
     
-    expect(csv).toContain('Date,Amount,Currency,Category,Note');
+    expect(csv).toContain('"Date","Amount","Currency","Category","Note"');
     expect(csv).toContain('"Coffee"');
     expect(csv).toContain('"Food"');
     expect(csv).toContain('"12.34"');

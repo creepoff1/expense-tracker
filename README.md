@@ -27,7 +27,7 @@ A modern expense tracking web application built with Next.js, Prisma, and SQLite
 
 1. **Clone and install dependencies:**
    ```bash
-   npm install
+   yarn install
    ```
 
 2. **Set up environment variables:**
@@ -38,27 +38,27 @@ A modern expense tracking web application built with Next.js, Prisma, and SQLite
 
 3. **Initialize the database:**
    ```bash
-   npm run db:generate
-   npm run db:migrate
+   yarn db:generate
+   yarn db:migrate
    ```
 
 4. **Start the development server:**
    ```bash
-   npm run dev
+   yarn dev
    ```
 
 5. **Open [http://localhost:3000](http://localhost:3000) in your browser.**
 
 ## Database Management
 
-- **View data**: `npm run db:studio`
-- **Reset database**: `npm run db:push`
-- **Generate Prisma client**: `npm run db:generate`
+- **View data**: `yarn db:studio`
+- **Reset database**: `yarn db:push`
+- **Generate Prisma client**: `yarn db:generate`
 
 ## Testing
 
-- **Unit tests**: `npm run test`
-- **E2E tests**: `npm run test:e2e`
+- **Unit tests**: `yarn test`
+- **E2E tests**: `yarn test:e2e`
 
 ## Project Structure
 
